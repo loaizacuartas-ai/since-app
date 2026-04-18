@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>Since · Llamadas privadas por salas</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">MVP funcional</span>
+          <h1>Since</h1>
+        </div>
+        <div class="connection-pill" id="connectionPill">Conectando…</div>
+      </header>
+
+      <main class="screen-container">
+        <section class="screen active" id="homeScreen">
+          <div class="hero-card">
+            <p class="hero-kicker">Llamadas privadas entre dos personas</p>
+            <h2>Habla y chatea dentro de una sala temporal.</h2>
+            <p class="muted">
+              Anónimo funcional, acceso por número de sala y PIN de 4 dígitos, sin cuentas y sin listas de contactos.
+            </p>
+          </div>
+
+          <div class="stack">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Crear sala</h3>
+                  <p class="muted">Se asigna automáticamente la primera sala libre.</p>
+                </div>
+              </div>
+
+              <button class="primary-button" id="createRoomBtn">Crear una sala privada</button>
+              <p class="hint" id="createRoomHint">Se generará un PIN de 4 dígitos para compartir.</p>
+            </article>
+
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Unirse a sala</h3>
+                  <p class="muted">Ingresa el número y el PIN de 4 dígitos.</p>
+                </div>
+                <div class="status-chip neutral" id="roomLookupChip">Sin verificar</div>
+              </div>
+
+              <label class="field">
+                <span>Número de sala</span>
+                <input type="number" id="joinRoomInput" placeholder="Ej. 12" min="1" step="1" inputmode="numeric" />
+              </label>
+
+              <label class="field">
+                <span>PIN</span>
+                <input type="password" id="joinPinInput" placeholder="4 dígitos" maxlength="4" inputmode="numeric" />
+              </label>
+
+              <div class="inline-actions">
+                <button class="secondary-button" id="checkRoomBtn">Ver estado</button>
+                <button class="primary-button" id="joinRoomBtn">Entrar</button>
+              </div>
+
+              <p class="hint" id="lookupMessage">La app mostrará si la sala existe, está ocupada o llena.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="screen" id="roomScreen">
+          <article class="room-header panel">
+            <div class="room-title-row">
+              <div>
+                <p class="eyebrow">Sala temporal</p>
+                <h2 id="roomTitle">Sala #—</h2>
+              </div>
+              <div class="status-chip neutral" id="occupancyChip">0 / 2</div>
+            </div>
+
+            <div class="credentials-grid">
+              <div class="credential-box">
+                <span class="credential-label">Número</span>
+                <strong id="roomNumberValue">—</strong>
+              </div>
+              <div class="credential-box">
+                <span class="credential-label">PIN</span>
+                <strong id="roomPinValue">—</strong>
+              </div>
+            </div>
+
+            <div class="inline-actions">
+              <button class="secondary-button" id="copyInviteBtn">Copiar acceso</button>
+              <button class="danger-button" id="leaveRoomBtn">Salir</button>
+            </div>
+          </article>
+
+          <article class="panel call-panel">
+            <div class="panel-header">
+              <div>
+                <h3>Llamada de voz</h3>
+                <p class="muted" id="callStatusText">Esperando permisos de audio…</p>
+              </div>
+              <div class="status-chip neutral" id="voiceStatusChip">Sin llamada</div>
+            </div>
+
+            <div class="call-state-box" id="callStateBox">
+              Tu sala está lista. Cuando entre la segunda persona, la llamada se conectará automáticamente.
+            </div>
+
+            <div class="inline-actions">
+              <button class="secondary-button" id="toggleMuteBtn">Silenciar micrófono</button>
+            </div>
+          </article>
+
+          <article class="panel chat-panel">
+            <div class="panel-header">
+              <div>
+                <h3>Chat en tiempo real</h3>
+                <p class="muted">Los mensajes existen solo mientras la sala siga viva.</p>
+              </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+              <div class="empty-chat-state" id="emptyChatState">
+                Aún no hay mensajes. Usa el chat para coordinar la llamada o compartir contexto.
+              </div>
+            </div>
+
+            <form class="chat-form" id="chatForm">
+              <input type="text" id="chatInput" maxlength="800" placeholder="Escribe un mensaje" autocomplete="off" />
+              <button class="primary-button" type="submit">Enviar</button>
+            </form>
+          </article>
+        </section>
+      </main>
+
+      <div class="toast" id="toast"></div>
+      <audio id="remoteAudio" autoplay playsinline></audio>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
