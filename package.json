@@ -1,0 +1,23 @@
+{
+  "name": "since-private-rooms-mvp",
+  "version": "1.0.0",
+  "description": "MVP de llamadas privadas por salas temporales con WebRTC + Socket.IO",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "webrtc",
+    "socket.io",
+    "voice-call",
+    "private-rooms",
+    "mvp"
+  ],
+  "author": "OpenAI for Sebastian",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.8.1"
+  }
+}
